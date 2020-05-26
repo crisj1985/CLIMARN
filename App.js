@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
 import React from 'react';
 import {
   SafeAreaView,
@@ -15,6 +7,7 @@ import {
   Text,
   StatusBar,
 } from 'react-native';
+import Formulario from './Components/Formulario';
 
 import {
   Header,
@@ -27,6 +20,7 @@ import {
 const App = () => {
   return (
     <>
+      <Formulario/>
     </>
   );
 };
