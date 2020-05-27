@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+import { StyleSheet, View, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import Formulario from './Components/Formulario';
 
 import {
@@ -18,15 +11,34 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 const App = () => {
+
+  const ocultaTeclado = ()=>{
+    Keyboard.dismiss();
+  }
+
   return (
     <>
-      <Formulario/>
+      <TouchableWithoutFeedback onPress={()=> ocultaTeclado()}>
+        <View style={styles.app}>
+          <View style={styles.contenido}>
+            <Formulario />
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
     </>
-  );
+  )
 };
 
 const styles = StyleSheet.create({
+  app:{
+    flex:1,
+    backgroundColor:"rgb(71,149,212)",
+    justifyContent: 'center'
 
+  },
+  contenido:{
+    marginHorizontal:"2.5%"
+}
 });
 
 export default App;
