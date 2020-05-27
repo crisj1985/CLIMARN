@@ -2,12 +2,12 @@ import React,{useState} from 'react'
 import { Text, View, StyleSheet, TextInput, Animated, TouchableWithoutFeedback } from 'react-native'
 import {Picker} from '@react-native-community/picker'
 
-const Formulario = () => {
-  const [animacionBoton] = useState(new Animated.Value(1)) 
+const Formulario = ({ busqueda, setBusqueda }) => {
+  const [animacionBoton] = useState(new Animated.Value(1))
   const animacionEntrada = () => {
-    Animated.spring(animacionBoton,{
+    Animated.spring(animacionBoton, {
       toValue: 0.8,
-      useNativeDriver:true
+      useNativeDriver: true,
     }).start()
   }
   const animacionSalida = () => {
@@ -18,16 +18,18 @@ const Formulario = () => {
   }
 
   const estiloAnimacion = {
-    transform:[{scale:animacionBoton}]
+    transform: [{ scale: animacionBoton }],
   }
+
+  const {pais,ciudad} = busqueda;
 
   return (
     <View style={styles.formulario}>
       <View>
-        <TextInput style={styles.input} placeholder="Ciudad" placeholderTextColor="#666" />
+        <TextInput onChangeText = {ciudad => setBusqueda({...busqueda,ciudad})} value={ciudad} style={styles.input} placeholder="Ciudad" placeholderTextColor="#666" />
       </View>
       <View>
-        <Picker itemStyle={{ backgroundColor: '#fff', height: 120 }}>
+        <Picker onValueChange = {pais => setBusqueda({...busqueda, pais})} selectedValue={pais} itemStyle={{ backgroundColor: '#fff', height: 120 }}>
           <Picker.item label="-- Seleccion un pais --" value="" />
           <Picker.item label="Estados Unidos" value="US" />
           <Picker.item label="Mexico" value="MX" />
@@ -39,7 +41,7 @@ const Formulario = () => {
         </Picker>
       </View>
       <TouchableWithoutFeedback onPressIn={() => animacionEntrada()} onPressOut={() => animacionSalida()}>
-        <Animated.View  style={[styles.btnBuscar, estiloAnimacion]}>
+        <Animated.View style={[styles.btnBuscar, estiloAnimacion]}>
           <Text style={styles.txtBuscar}>Buscar Clima</Text>
         </Animated.View>
       </TouchableWithoutFeedback>
