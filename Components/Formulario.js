@@ -60,7 +60,7 @@ const Formulario = ({ busqueda, setBusqueda, setConsultar }) => {
           <Picker.item label="Argentina" value="AR" />
           <Picker.item label="Colombia" value="CO" />
           <Picker.item label="Costa Rica" value="CR" />
-          <Picker.item label="Espana" value="ES" />
+          <Picker.item label="España" value="ES" />
         </Picker>
       </View>
       <TouchableWithoutFeedback

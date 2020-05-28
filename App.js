@@ -20,6 +20,7 @@ const App = () => {
 
   const [consultar, setConsultar] = useState(false)
   const [resultado,setResultado] = useState({})
+  const [bgcolor,setBgcolor] = useState('rgb(71,149,212)')
 
   const  {pais,ciudad} = busqueda
   useEffect( () => {
@@ -30,10 +31,22 @@ const App = () => {
         console.log(url);
 
         try {    
-          const resultado = await fetch(url)
-          const respuesta = await resultado.json()
+          const result = await fetch(url)
+          const respuesta = await result.json()
           setResultado(respuesta)
           setConsultar(false)
+          const kelvin = 273.15
+          const { main } = resultado
+          const actual =  main.temp - kelvin 
+          console.log(actual)
+          
+          if(actual < 10){
+            setBgcolor('rgb(105,108,149)')
+          }else if (actual > 10 && actual < 25){
+            setBgcolor('rgb(71,149,212)')
+          }else{
+            setBgcolor('rgb(178,28,61)')
+          }
           
         } catch (error) {
           mostrarAlerta()
@@ -53,14 +66,17 @@ const App = () => {
     Keyboard.dismiss()
   }
 
+  const bgcolorApp = {
+    backgroundColor: bgcolor,
+  }
 
 
   return (
     <>
       <TouchableWithoutFeedback onPress={() => ocultaTeclado()}>
-        <View style={styles.app}>
+        <View style={[styles.app, bgcolorApp]}>
           <View style={styles.contenido}>
-            <Clima resultado = {resultado}/>
+            <Clima resultado={resultado} />
             <Formulario busqueda={busqueda} setBusqueda={setBusqueda} setConsultar={setConsultar} />
           </View>
         </View>
@@ -72,7 +88,6 @@ const App = () => {
 const styles = StyleSheet.create({
   app:{
     flex:1,
-    backgroundColor:"rgb(71,149,212)",
     justifyContent: 'center'
 
   },
