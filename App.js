@@ -1,6 +1,7 @@
 import React,{useState, useEffect} from 'react';
 import { StyleSheet, View, TouchableWithoutFeedback, Keyboard, Alert} from 'react-native';
-import Formulario from './Components/Formulario';
+import Formulario from './Components/Formulario'
+import Clima from './Components/Clima'
 
 import {
   Header,
@@ -59,6 +60,7 @@ const App = () => {
       <TouchableWithoutFeedback onPress={() => ocultaTeclado()}>
         <View style={styles.app}>
           <View style={styles.contenido}>
+            <Clima resultado = {resultado}/>
             <Formulario busqueda={busqueda} setBusqueda={setBusqueda} setConsultar={setConsultar} />
           </View>
         </View>
