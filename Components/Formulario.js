@@ -1,8 +1,8 @@
 import React,{useState} from 'react'
-import { Text, View, StyleSheet, TextInput, Animated, TouchableWithoutFeedback } from 'react-native'
+import { Text, View, StyleSheet, TextInput, Animated, TouchableWithoutFeedback, Alert } from 'react-native'
 import {Picker} from '@react-native-community/picker'
 
-const Formulario = ({ busqueda, setBusqueda }) => {
+const Formulario = ({ busqueda, setBusqueda, setConsultar }) => {
   const [animacionBoton] = useState(new Animated.Value(1))
   const animacionEntrada = () => {
     Animated.spring(animacionBoton, {
@@ -21,15 +21,38 @@ const Formulario = ({ busqueda, setBusqueda }) => {
     transform: [{ scale: animacionBoton }],
   }
 
-  const {pais,ciudad} = busqueda;
+  const consultarClima = () => {
+    if (pais.trim() === '' || ciudad.trim() === '') {
+      mostrarAlerta()
+      return
+    }
+
+    setConsultar(true)
+  }
+
+  const mostrarAlerta = () => {
+    Alert.alert('Error...', 'Agrega una ciuada y pasi para la busqueda', [{ text: 'Entendido' }])
+  }
+
+  const { pais, ciudad } = busqueda
 
   return (
     <View style={styles.formulario}>
       <View>
-        <TextInput onChangeText = {ciudad => setBusqueda({...busqueda,ciudad})} value={ciudad} style={styles.input} placeholder="Ciudad" placeholderTextColor="#666" />
+        <TextInput
+          onChangeText={(ciudad) => setBusqueda({ ...busqueda, ciudad })}
+          value={ciudad}
+          style={styles.input}
+          placeholder="Ciudad"
+          placeholderTextColor="#666"
+        />
       </View>
       <View>
-        <Picker onValueChange = {pais => setBusqueda({...busqueda, pais})} selectedValue={pais} itemStyle={{ backgroundColor: '#fff', height: 120 }}>
+        <Picker
+          onValueChange={(pais) => setBusqueda({ ...busqueda, pais })}
+          selectedValue={pais}
+          itemStyle={{ backgroundColor: '#fff', height: 120 }}
+        >
           <Picker.item label="-- Seleccion un pais --" value="" />
           <Picker.item label="Estados Unidos" value="US" />
           <Picker.item label="Mexico" value="MX" />
@@ -40,7 +63,11 @@ const Formulario = ({ busqueda, setBusqueda }) => {
           <Picker.item label="Espana" value="ES" />
         </Picker>
       </View>
-      <TouchableWithoutFeedback onPressIn={() => animacionEntrada()} onPressOut={() => animacionSalida()}>
+      <TouchableWithoutFeedback
+        onPress={() => consultarClima()}
+        onPressIn={() => animacionEntrada()}
+        onPressOut={() => animacionSalida()}
+      >
         <Animated.View style={[styles.btnBuscar, estiloAnimacion]}>
           <Text style={styles.txtBuscar}>Buscar Clima</Text>
         </Animated.View>
